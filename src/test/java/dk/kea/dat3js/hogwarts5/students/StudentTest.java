@@ -7,6 +7,21 @@ import static org.junit.jupiter.api.Assertions.*;
 class StudentTest {
 
     @Test
+    void setFullName() {
+
+        //arrange
+        Student student = new Student("first", "middle", "last", null, 5);
+
+        //act
+        student.setFullName("Hermione Jean Granger");
+
+        //assert
+        assertEquals("Hermione", student.getFirstName());
+        assertEquals("Jean", student.getMiddleName());
+        assertEquals("Granger", student.getLastName());
+    }
+
+    @Test
     void getFullNameWithMiddleName() {
 
         //arrange
@@ -56,12 +71,12 @@ class StudentTest {
         Student student = new Student("first", "middle", "last", null, 5);
 
         //act
-        student.setFullName("Hermione Jean Granger");
+        student.setFullName("Albus Percival Wulfric Brian Dumbledore");
 
         //assert
-        assertEquals("Hermione", student.getFirstName());
-        assertEquals("Jean", student.getMiddleName());
-        assertEquals("Granger", student.getLastName());
+        assertEquals("Albus", student.getFirstName());
+        assertEquals("Percival Wulfric Brian", student.getMiddleName());
+        assertEquals("Dumbledore", student.getLastName());
     }
 
     @Test
@@ -93,18 +108,54 @@ class StudentTest {
                 assertEquals(null, student.getMiddleName());
                 assertEquals(null, student.getLastName());
     }
-        @Test
-    void setFullName() {
+
+    @Test
+    void capitalizeIndividualsNames() {
 
         //arrange
         Student student = new Student("first", "middle", "last", null, 5);
 
         //act
-        student.setFullName("Hermione Jean Granger");
+        student.setFirstName("harry");
+        student.setMiddleName("james");
+        student.setLastName("potter");
 
         //assert
-        assertEquals("Hermione", student.getFirstName());
-        assertEquals("Jean", student.getMiddleName());
-        assertEquals("Granger", student.getLastName());
+        assertEquals("Harry", student.getFirstName());
+        assertEquals("James", student.getMiddleName());
+        assertEquals("Potter", student.getLastName());
     }
+
+    @Test
+    void capitalizeIndividualNamesWithCrazyCapitalization(){
+
+            //arrange
+            Student student = new Student("first", "middle", "last", null, 5);
+
+            //act
+            student.setFirstName("hArRy");
+            student.setMiddleName("jAmEs");
+            student.setLastName("pOtTeR");
+
+            //assert
+            assertEquals("Harry", student.getFirstName());
+            assertEquals("James", student.getMiddleName());
+            assertEquals("Potter", student.getLastName());
+    }
+
+    @Test
+    void CapitalizeWithMultipleMiddleNames(){
+
+                //arrange
+                Student student = new Student("first", "middle", "last", null, 5);
+
+                //act
+        student.setFullName("alBus perCival wulFric brIan dumbleDore");
+
+                //assert
+                assertEquals("Albus", student.getFirstName());
+                assertEquals("Percival Wulfric Brian", student.getMiddleName());
+                assertEquals("Dumbledore", student.getLastName());
+    }
+
 }

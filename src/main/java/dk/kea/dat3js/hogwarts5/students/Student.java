@@ -3,7 +3,11 @@ package dk.kea.dat3js.hogwarts5.students;
 import dk.kea.dat3js.hogwarts5.house.House;
 import jakarta.persistence.*;
 
+import java.util.Arrays;
 import java.util.Objects;
+import java.util.stream.Collectors;
+
+import static org.apache.logging.log4j.ThreadContext.isEmpty;
 
 @Entity
 public class Student {
@@ -47,7 +51,7 @@ public class Student {
   }
 
   public void setFirstName(String firstName) {
-    this.firstName = firstName;
+    this.firstName = capitalize(firstName);
   }
 
   public String getMiddleName() {
@@ -55,7 +59,13 @@ public class Student {
   }
 
   public void setMiddleName(String middleName) {
-    this.middleName = middleName;
+    if (middleName == null || middleName.trim().isEmpty()) {
+      this.middleName = middleName;
+    } else {
+      this.middleName = Arrays.stream(middleName.split(" "))
+              .map(this::capitalize)
+              .collect(Collectors.joining(" "));
+    }
   }
 
   public String getLastName() {
@@ -63,7 +73,7 @@ public class Student {
   }
 
   public void setLastName(String lastName) {
-    this.lastName = lastName;
+    this.lastName = capitalize(lastName);
   }
 
   public House getHouse() {
@@ -135,4 +145,23 @@ public class Student {
       setLastName("");
     }
   }
+
+  private String capitalize(String name) {
+    if (name == null) {
+      return null;
+    }
+
+    if (name.length() < 2) {
+      return name.toUpperCase();
+    }
+
+    if(name.contains(" ")){
+      int space = name.indexOf(" ");
+      return capitalize(name.substring(0, space))+ " " + capitalize(name.substring(space+1));
+    }
+
+    return name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
+  }
+
+
 }
