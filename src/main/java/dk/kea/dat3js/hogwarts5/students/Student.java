@@ -40,6 +40,8 @@ public class Student {
     this.id = id;
   }
 
+
+
   public String getFirstName() {
     return firstName;
   }
@@ -93,4 +95,44 @@ public class Student {
     return Objects.hash(getFirstName(), getMiddleName(), getLastName(), getHouse().getName());
   }
 
+
+  public String getFullName() {
+    return firstName + " " + (middleName != null ? middleName +" " :"") + (lastName!=null ? lastName +" " : "");
+  }
+
+  public void setFullName(String fullName){
+    if (fullName == null) {
+      setFirstName(null);
+      setMiddleName(null);
+      setLastName(null);
+      return;
+    }
+
+    if (fullName.trim().isEmpty()) {
+      setFirstName("");
+      setMiddleName("");
+      setLastName("");
+      return;
+    }
+
+    String[] nameParts = fullName.split(" ");
+
+    setFirstName(nameParts[0]);
+
+    if (nameParts.length > 1) {
+      StringBuilder middleNames = new StringBuilder();
+      for (int i = 1; i < nameParts.length - 1; i++) {
+        middleNames.append(nameParts[i]).append(" ");
+      }
+      setMiddleName(middleNames.toString().trim());
+    } else {
+      setMiddleName("");
+    }
+
+    if (nameParts.length > 2) {
+      setLastName(nameParts[nameParts.length - 1]);
+    } else {
+      setLastName("");
+    }
+  }
 }
